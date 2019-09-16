@@ -45,7 +45,7 @@ $sobre = $sobre->fetch()['sobre'];
         <div class="container chamada-banner">
           <div class="row">
               <div class="col-md-12 text-center">
-              <h2><?php echo htmlentities('<'); ?>Danki.Code<?php echo htmlentities('>');  ?></h2>
+              <h2><?php echo htmlentities('<'); ?>My Website<?php echo htmlentities('>');  ?></h2>
                   <p>Empresa voltada para desenvolvimento web e marketing digital</p>
                   <a href="">Saiba Mais!</a>
               </div><!--col-md-12-->
@@ -92,6 +92,7 @@ $sobre = $sobre->fetch()['sobre'];
         <div class="container equipe-container">
             <div class="row">
              <?php 
+             // Exibe os membros da equipe
               $selecionarMembros = $pdo->prepare('SELECT * FROM tb_equipe'); 
               $selecionarMembros->execute();
               $membros = $selecionarMembros->fetchAll();

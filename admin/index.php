@@ -5,7 +5,7 @@ $sobre->execute();
 $sobre = $sobre->fetch()['sobre'];
 
 ?>
-<?php  ////////// PAINEL /////////////////     ?>
+<?php  ////////// PAINEL DE CONTROLE DO SITE /////////////////     ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -79,13 +79,15 @@ $sobre = $sobre->fetch()['sobre'];
                 </div>
                 <div class="col-md-9">
                 <?php 
+                  // Manipula os dados da seção sobre no banco de dados
                   if(isset($_POST['editar_sobre'])){
                     $sobre = $_POST['sobre'];
                     $pdo->exec('DELETE FROM `tb_sobre`');
                     $sql = $pdo->prepare('INSERT INTO `tb_sobre` VALUES (null, ?)');
                     $sql->execute(array($sobre));
                     echo "<div class='alert alert-success'>O código HTML foi editado com sucesso!</div>";
-
+                  
+                  // Manipula os dados dos membros da equipe no banco de dados
                     $sobre = $pdo->prepare('SELECT FROM `tb_sobre`');
                     $sobre->execute();
                     $sobre = $sobre->fetch()['sobre'];                  
@@ -153,6 +155,7 @@ $sobre = $sobre->fetch()['sobre'];
                               </thead>
                               <tbody>
                               <?php 
+                              // Conecta e exibe os membros da equipe
                                 $selecionarMembros = $pdo->prepare("SELECT * FROM `tb_equipe`");
                                 $selecionarMembros->execute();
                                 $membros = $selecionarMembros->fetchAll();
@@ -188,6 +191,7 @@ $(function(){
   cliqueMenu();
   scrollItem();
 
+  // Função que muda a cor da seção selecionada em ambos os menus
   function cliqueMenu(){
     $('#menu-principal a, .list-group a').click(function(){
       $('.list-group a').removeClass('active').removeClass('cor-padrao');
@@ -198,6 +202,7 @@ $(function(){
     })
   }
 
+  // Função para deslizar até a seção clicada
   function scrollItem(){
     $('#menu-principal a, .list-group a').click(function(){
       var ref = '#'+$(this).attr('ref_sys')+'_section';
@@ -209,6 +214,7 @@ $(function(){
     });
   }
 
+  // Efeito fadeOut e redireciona o delete do banco via ajax
   $('button.deletar-membro').click(function(){
     var id_membro = $(this).attr('id_membro');
     var el = $(this).parent().parent();
